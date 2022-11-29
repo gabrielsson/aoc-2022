@@ -10,6 +10,7 @@ trait Inputs {
 
 
   def getInput: Seq[String] = read(fileName)
+
   def getTestInput: Seq[String] = read(testFileName)
 
   def getNonSeparatedIntegers: Seq[Int] = getInput.head.split("\\B").map(_.toInt).toSeq

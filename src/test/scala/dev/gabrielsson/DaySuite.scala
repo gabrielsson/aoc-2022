@@ -7,8 +7,9 @@ import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
-abstract class DaySuite extends AnyFlatSpec with Matchers{
-  def day: Day[Seq[String], Int]
+class DaySuite extends AnyFlatSpec with Matchers{
+  val day = new Day0
+
   it should "part1Test" in {
     day.part1(day.getTestInput) shouldBe -1
   }
