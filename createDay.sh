@@ -12,9 +12,8 @@ class Day$1 extends Day[Seq[String], Int] {
   }
 }
 EOF
-
+mkdir -p src/test/scala/dev/gabrielsson
 cat << EOF > src/test/scala/dev/gabrielsson/Day$1Suite.scala
-
 package dev.gabrielsson
 
 import org.junit.runner.RunWith
@@ -23,8 +22,8 @@ import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
-class Day$1Suite extends AnyFlatSpec with Matchers{
-  val day = new Day$1
+class Day1Suite extends AnyFlatSpec with Matchers {
+  val day = new Day1
 
   it should "part1Test" in {
     day.part1(day.getTestInput) shouldBe -1
