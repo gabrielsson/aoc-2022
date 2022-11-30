@@ -39,5 +39,5 @@ class Day$1Suite extends AnyFlatSpec with Matchers {
   }
 }
 EOF
-touch src/test/resources/day$1.txt
+curl "https://adventofcode.com/2022/day/$1/input" -H "cookie: session=$SESSION_ID" -o src/test/resources/day$1.txt
 touch src/test/resources/day$1test.txt
