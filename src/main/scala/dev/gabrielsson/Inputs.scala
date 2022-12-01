@@ -25,17 +25,8 @@ trait Inputs {
   }
 
   def groups(strings: Seq[String]): Seq[Seq[String]] = {
-    val groups = mutable.ListBuffer[Seq[String]]()
-    val subList = new mutable.ListBuffer[String]
-    for (string <- strings) {
-      if (string.isBlank) {
-        groups += subList.toSeq
-        subList.clear()
-      } else {
-        subList.append(string)
-      }
-    }
-    groups += subList.toSeq
-    groups.toSeq
+    strings.mkString("\n")
+      .split("\n\n").toSeq
+      .map(_.split("\n").toSeq)
   }
 }
