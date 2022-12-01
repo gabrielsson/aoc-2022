@@ -1,13 +1,13 @@
 cat << EOF > src/main/scala/dev/gabrielsson/Day$1.scala
 package dev.gabrielsson
 
-class Day$1 extends Day[Seq[String], Int] {
+class Day$1 extends Inputs {
 
-  override def part1(input: Seq[String]): Int = {
+  def part1(input: Seq[String]): Int = {
     -1
   }
 
-  override def part2(input: Seq[String]): Int = {
+  def part2(input: Seq[String]): Int = {
     -1
   }
 }
