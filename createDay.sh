@@ -13,6 +13,7 @@ class Day$1 extends Day[Seq[String], Int] {
 }
 EOF
 mkdir -p src/test/scala/dev/gabrielsson
+mkdir -p src/test/resources
 cat << EOF > src/test/scala/dev/gabrielsson/Day$1Suite.scala
 package dev.gabrielsson
 
@@ -39,5 +40,6 @@ class Day$1Suite extends AnyFlatSpec with Matchers {
   }
 }
 EOF
+
 curl "https://adventofcode.com/2022/day/$1/input" -H "cookie: session=$SESSION_ID" -o src/test/resources/day$1.txt
 touch src/test/resources/day$1test.txt

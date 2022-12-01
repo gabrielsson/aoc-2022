@@ -24,18 +24,18 @@ trait Inputs {
     }
   }
 
-  def groupsSeparatedByTwoNewlines(strings: Seq[String]): Seq[String] = {
-    var groups = mutable.ListBuffer[String]()
-    val sb = new mutable.StringBuilder
+  def groups(strings: Seq[String]): Seq[Seq[String]] = {
+    val groups = mutable.ListBuffer[Seq[String]]()
+    val subList = new mutable.ListBuffer[String]
     for (string <- strings) {
       if (string.isBlank) {
-        groups += sb.toString()
-        sb.clear()
+        groups += subList.toSeq
+        subList.clear()
       } else {
-        sb.append(s"\n${string}")
+        subList.append(string)
       }
     }
-    groups += sb.toString()
+    groups += subList.toSeq
     groups.toSeq
   }
 }
