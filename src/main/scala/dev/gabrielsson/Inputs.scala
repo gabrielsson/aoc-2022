@@ -1,7 +1,6 @@
 package dev.gabrielsson
 
 
-import scala.collection.mutable
 import scala.io.Source
 
 trait Inputs {
@@ -24,9 +23,14 @@ trait Inputs {
     }
   }
 
-  def groups(strings: Seq[String]): Seq[Seq[String]] = {
-    strings.mkString("\n")
-      .split("\n\n").toSeq
-      .map(_.split("\n").toSeq)
+  def groups[B](strings: Seq[B], predicate: B=>Boolean): Seq[Seq[B]] = {
+    val reduction = strings.foldLeft((Seq():Seq[Seq[B]], Seq[B]())) {
+      case ((reduction, remainder), item) =>
+        if (predicate.apply(item))
+          (reduction :+ remainder, Seq())
+        else
+          (reduction, remainder :+ item)
+    }
+    reduction._1 :+ reduction._2
   }
 }
