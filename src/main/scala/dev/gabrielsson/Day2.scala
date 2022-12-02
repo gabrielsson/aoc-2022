@@ -14,29 +14,24 @@ class Day2 extends Inputs {
       .map(t => calc(t._1, t._2))
       .sum
   }
-  def calc(oi: Int, yi: Int): Int = {
-    if (oi == yi) {
-      3 + yi
-    } else if (yi == winning(oi)) {
-      6 + yi
+  def calc(opp: Int, you: Int): Int = {
+    if (opp == you) {
+      3 + you
+    } else if (you == winning(opp)) {
+      6 + you
     } else {
-      0 + yi
+      0 + you
     }
   }
 
-  def winning(int: Int): Int = {
-    if (int > 2)
-      1
-    else
-      int + 1
-
+  def winning(int: Int): Int = int match {
+    case i if i > 2 => 1
+    case i => i + 1
   }
 
-  def lose(int: Int): Int = {
-    if (int < 2)
-      3
-    else
-      int - 1
+  def lose(int: Int): Int = int match {
+    case i if i < 2 => 3
+    case i => i - 1
   }
 
   def parse1(str: String): Int = str match {
@@ -50,8 +45,7 @@ class Day2 extends Inputs {
 
 
   def parse2(opp: String, you: String): (Int, Int) = {
-    val oi =
-      opp match {
+    val oi = opp match {
         case "A" => 1
         case "B" => 2
         case "C" => 3
