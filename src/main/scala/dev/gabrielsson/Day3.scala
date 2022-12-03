@@ -6,15 +6,15 @@ class Day3 extends Inputs {
     input.map(s => s.splitAt(s.length / 2))
       .map(t => t._1 intersect t._2)
       .map(_.head)
-      .map(1 + "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".indexOf(_))
+      .map(1 + ('a' to 'z').++('A' to 'Z').indexOf(_))
       .sum
   }
 
   def part2(input: Seq[String]): Int = {
     input.grouped(3)
-      .map(g => g.head intersect g(1) intersect g(2))
+      .map(g => g.tail.fold(g.head)((r, v) => v intersect r))
       .map(_.head)
-      .map(1 + "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".indexOf(_))
+      .map(1 + ('a' to 'z').++('A' to 'Z').indexOf(_))
       .sum
   }
 }
