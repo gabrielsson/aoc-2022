@@ -9,11 +9,22 @@ trait Inputs {
 
 
   def getInput: Seq[String] = read(fileName)
-
+  def getRaw: String = raw(fileName)
   def getTestInput: Seq[String] = read(testFileName)
+  def getTestRaw: String = raw(testFileName)
 
   def getNonSeparatedIntegers: Seq[Int] = getInput.head.split("\\B").map(_.toInt).toSeq
 
+
+
+  def raw(path: String): String = {
+    val source = Source.fromResource(path)
+    try {
+      source.getLines().mkString
+    } finally {
+      source.close()
+    }
+  }
   def read(path: String): Seq[String] = {
     val source = Source.fromResource(path)
     try {
