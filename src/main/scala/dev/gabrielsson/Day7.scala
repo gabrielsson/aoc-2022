@@ -71,37 +71,32 @@ class Day7 extends Inputs {
     var sumMap = mutable.Map[ListBuffer[String], Long]()
     val neighborsFunction: String => Iterable[String] = {
       folder => {
+
+        val parentFolder: mutable.Map[String, AnyRef] = curPath.foldLeft(fileSystem)((fs, path) => {
+          fs(path).asInstanceOf[mutable.Map[String, AnyRef]]
+        })
+
+        println("Visiting " + folder)
+        if(!parentFolder.contains(folder)) {
+          curPath.remove(curPath.size-1)
+        }
+
         curPath.addOne(folder)
+
         val curFold: mutable.Map[String, AnyRef] = curPath.foldLeft(fileSystem)((fs, path) => {
           fs(path).asInstanceOf[mutable.Map[String, AnyRef]]
         })
         val sum = curFold
           .filter(kv => kv._2.isInstanceOf[Long]).map(kv => kv._2.asInstanceOf[Long]).sum
         sumMap.put(curPath, sum)
-        if(curFold.contains(folder) && curFold(folder).isInstanceOf[mutable.Map[String, AnyRef]]) {
 
-          curFold(folder).asInstanceOf[mutable.Map[String, AnyRef]]
-            .filter(e => e._2.isInstanceOf[mutable.Map[String, AnyRef]]).keys
-        } else if(curFold.contains(folder)) {
-          /*
-          if (curPath.size > 1)
-            curPath.remove(curPath.size - 1)
-          curFold = curPath.foldLeft(fileSystem)((fs, path) => {
-            fs(path).asInstanceOf[mutable.Map[String, AnyRef]]
-          })
+        curFold
+          .filter(e => e._2.isInstanceOf[mutable.Map[String, AnyRef]]).keys
 
-          curFold(folder).asInstanceOf[mutable.Map[String, AnyRef]]
-            .filter(e => e._2.isInstanceOf[mutable.Map[String, AnyRef]]).keys
-
-           */
-          Iterable()
-        } else {
-          Iterable()
-        }
       }
 
     }
-    val value = Graphs.dfs("/")(neighborsFunction)
+    val value = Graphs.bfs("/")(neighborsFunction)
 
 
     println(sumMap)
