@@ -9,16 +9,17 @@ import org.scalatestplus.junit.JUnitRunner
 class Day8Suite extends AnyFlatSpec with Matchers {
   val day = new Day8
 
-  it should "part1Test" in {
-    day.part1(day.getTestRaw) shouldBe -1
+
+  "part1test" should "part1Test" in {
+    day.part1(day.getTestRaw) shouldBe 21
   }
-  it should "part1" in {
-    day.part1(day.getRaw) shouldBe -1
+  "part1" should "part1" in {
+    day.part1(day.getRaw) shouldBe 1662
   }
   it should "part2Test" in {
-    day.part2(day.getTestRaw) shouldBe -1
+    day.part2(day.getTestRaw) shouldBe 8
   }
   it should "part2" in {
-    day.part2(day.getRaw) shouldBe -1
+    day.part2(day.getRaw) shouldBe 537600
   }
 }
