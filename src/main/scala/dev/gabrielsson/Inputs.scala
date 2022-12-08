@@ -20,7 +20,7 @@ trait Inputs {
   def raw(path: String): String = {
     val source = Source.fromResource(path)
     try {
-      source.getLines().mkString
+      source.mkString
     } finally {
       source.close()
     }
