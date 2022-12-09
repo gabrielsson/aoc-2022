@@ -1,7 +1,7 @@
 package dev.gabrielsson
 
 import dev.gabrielsson.GridExtensions.GridCharSeq
-import dev.gabrielsson.Points.{Dir, Point, Position}
+import dev.gabrielsson.Points.{Dir, Point}
 
 import scala.collection.mutable
 
