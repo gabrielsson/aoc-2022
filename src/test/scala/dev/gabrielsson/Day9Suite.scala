@@ -11,16 +11,16 @@ class Day9Suite extends AnyFlatSpec with Matchers {
 
   behavior of "part1"
   it should "part1Test" in {
-    day.part1(day.getTestInput) shouldBe -1
+    day.part1(day.getTestInput) shouldBe 88
   }
   it should "part1" in {
-    day.part1(day.getInput) shouldBe -1
+    day.part1(day.getInput) shouldBe 6498
   }
   behavior of "part2"
   it should "part2Test" in {
-    day.part2(day.getTestInput) shouldBe -1
+    day.part2(day.getTestInput) shouldBe 36
   }
   it should "part2" in {
-    day.part2(day.getInput) shouldBe -1
+    day.part2(day.getInput) shouldBe 2531
   }
 }

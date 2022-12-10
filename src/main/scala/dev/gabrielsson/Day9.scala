@@ -10,7 +10,7 @@ class Day9 extends Inputs {
   def part1(input: Seq[String]): Int = {
     var head = Position.zero
     var tail = Position.zero
-    var trail = mutable.ListBuffer[Point]()
+    val trail = mutable.ListBuffer[Point]()
     input.map(_.split(" ")).foreach(step => {
       val direction = step(0).charAt(0)
       val n = step(1).toInt
@@ -45,18 +45,14 @@ class Day9 extends Inputs {
 
 
     })
-
-
-    println(trail.distinct)
     trail.toSet.size
   }
 
   def part2(input: Seq[String]): Int = {
 
-    var rope = mutable.ListBuffer[Point]()
-
-    rope.addAll((1 to 10).map(_ => Point(400,400)))
-    var trail = mutable.ListBuffer[Point]()
+    val rope = mutable.ListBuffer[Point]()
+    rope.addAll((1 to 10).map(_ => Position.zero))
+    val trail = mutable.ListBuffer[Point]()
 
 
     def move(headi: Int, taili: Int) = {
@@ -92,9 +88,7 @@ class Day9 extends Inputs {
       val direction = step(0).charAt(0)
       val n = step(1).toInt
       trail.addOne(rope.last)
-
-
-      (1 to n).foreach(i => {
+      (1 to n).foreach(_ => {
         val dir = Dir(rope.head, direction)
         rope(0) = dir.forward().p
         (0 to 8).foreach(j => {
@@ -102,18 +96,7 @@ class Day9 extends Inputs {
         })
       })
     })
-
-
-    val set = trail.toIndexedSeq.toSet
-    val iterator = Box(Point(set.map(_.x).min, set.map(_.y).min), Point(set.map(_.x).max + 10, set.map(_.y).max + 10)).iterator
-
-    val grid: Grid[Char] = iterator.map(p => (p, if (set.contains(p)) '#' else '.')).toMap
-
-    grid.canvas('.')(v => v).foreach(a => {
-      a.foreach(print)
-      print("\n")
-    })
-    set.size
+    trail.toSet.size
   }
 
 
