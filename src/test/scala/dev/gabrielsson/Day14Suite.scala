@@ -16,9 +16,9 @@ class Day14Suite extends AnyFlatSpec with Matchers {
     day.part1(day.getInput) shouldBe -1
   }
   it should "part2Test" in {
-    day.part2(day.getTestInput) shouldBe -1
+    day.part2Smooth(day.getTestInput) shouldBe -1
   }
   it should "part2" in {
-    day.part2(day.getInput) shouldBe -1
+    day.part2Smooth(day.getInput) shouldBe -1
   }
 }

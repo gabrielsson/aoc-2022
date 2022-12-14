@@ -75,6 +75,25 @@ class Day14 extends Inputs {
   }
 
 
+  def part2Smooth(input: Seq[String]): Int = {
+    val lines = input.flatMap (s => s.split (" -> ").sliding (2).map (e => Line (parsePoint (e (0) ), parsePoint (e (1) ) ) ) ).toSet
+
+    //println(lines)
+
+    val linePoints = lines.flatMap (_.points () )
+    val miny = linePoints.minBy (_.y).y
+    val maxy = linePoints.maxBy (_.y).y +1
+    val minx = linePoints.minBy (_.x).x - maxy - 10
+    val maxx = linePoints.maxBy (_.x).x + maxy + 10
+
+    val sum = (maxy to 0 by -1).flatMap(y => {
+      (500 - y to 500 + y by 1).map(x => {
+        if (Point(x, y).neighborsAbove.forall(linePoints.contains) || linePoints.contains(Point(x,y))) 0 else 1
+      })
+    }).sum
+    sum
+
+  }
   def part2(input: Seq[String]): Int = {
     val lines = input.flatMap(s => s.split(" -> ").sliding(2).map(e => Line(parsePoint(e(0)), parsePoint(e(1))))).toSet
 
