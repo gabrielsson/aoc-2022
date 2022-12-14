@@ -87,11 +87,23 @@ class Day14 extends Inputs {
     val maxx = linePoints.maxBy (_.x).x + maxy + 10
 
     val sum = (maxy to 0 by -1).flatMap(y => {
-      (500 - y to 500 + y by 1).map(x => {
-        if (Point(x, y).neighborsAbove.forall(linePoints.contains) || linePoints.contains(Point(x,y))) 0 else 1
+      (500 - y to 500 + y by 1).flatMap(x => {
+        if (Point(x, y).neighborsAbove.forall(linePoints.contains) || linePoints.contains(Point(x,y))) None else Some(Point(x,y))
       })
-    }).sum
-    sum
+    })
+
+    val grid: Grid[Char] = Box(Point(minx - 1, 0), Point(maxx + 1, maxy + 1)).iterator.map(p => {
+      val wall = if (sum.contains(p)) '#' else '.'
+      (p, wall)
+    }).toMap
+
+    val canvas = grid.canvas('.')(v => v)
+    canvas.foreach(a => {
+      a.slice(minx, maxx).foreach(print)
+      print("\n")
+    })
+
+    sum.size
 
   }
   def part2(input: Seq[String]): Int = {
