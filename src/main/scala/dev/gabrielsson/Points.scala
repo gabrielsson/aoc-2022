@@ -5,7 +5,9 @@ object Points {
   case class Point(x: Int, y: Int) {
 
     def +(p: Point): Point = Point(x + p.x, y + p.y)
+
     def -(p: Point): Point = Point(x - p.y, y - p.y)
+
     def *(n: Int): Point = Point(x * n, y * n)
 
     def neighbors: List[Point] =
@@ -31,6 +33,15 @@ object Points {
       case Point(x2, y2) if y2 == y && x2 < x => 'W'
       case Point(x2, y2) if y2 == y && x2 > x => 'E'
       case _ => throw new IllegalArgumentException("Points are equal")
+    }
+  }
+
+  case class Line(p1: Point, p2: Point) {
+    val (dx, dy) = ((p2.x - p1.x).sign, (p2.y - p1.y).sign)
+
+    def points(): Seq[Point] = {
+      val max = math.max((p2.x - p1.x).abs, (p2.y - p1.y).abs)
+      (0 to max).map(i => Point(p1.x + dx * i, p1.y + dy * i))
     }
   }
 
