@@ -22,7 +22,6 @@ class Day14 extends Inputs {
     val linePoints = lines.flatMap(_.points())
     val minx = linePoints.minBy(_.x).x
     val maxx = linePoints.maxBy(_.x).x
-    val miny = linePoints.minBy(_.y).y
     val maxy = linePoints.maxBy(_.y).y
 
 
@@ -50,7 +49,7 @@ class Day14 extends Inputs {
           }
         } else {
           rest = sand.p.y > maxy
-          if(!rest)
+          if (!rest)
             sand = sand.forward()
 
         }
@@ -59,66 +58,21 @@ class Day14 extends Inputs {
       found = sand.p.y > maxy
 
     }
-    val grid: Grid[Char] = Box(Point(minx - 1, miny), Point(maxx + 1, maxy + 1)).iterator.map(p => {
-      val wall = if (blockedPoints.contains(p)) '#' else '.'
-      (p, wall)
-    }).toMap
-
-    val canvas = grid.canvas('.')(v => v)
-    canvas.foreach(a => {
-      a.slice(minx, maxx).foreach(print)
-      print("\n")
-    })
-
-
-    iteration-1
+    printSand(maxy, minx, maxx, linePoints, blockedPoints.toSet)
+    iteration - 1
   }
 
-
-  def part2Smooth(input: Seq[String]): Int = {
-    val lines = input.flatMap (s => s.split (" -> ").sliding (2).map (e => Line (parsePoint (e (0) ), parsePoint (e (1) ) ) ) ).toSet
-
-    //println(lines)
-
-    val linePoints = lines.flatMap (_.points () )
-    val miny = linePoints.minBy (_.y).y
-    val maxy = linePoints.maxBy (_.y).y +1
-    val minx = linePoints.minBy (_.x).x - maxy - 10
-    val maxx = linePoints.maxBy (_.x).x + maxy + 10
-
-    val sum = (maxy to 0 by -1).flatMap(y => {
-      (500 - y to 500 + y by 1).flatMap(x => {
-        if (Point(x, y).neighborsAbove.forall(linePoints.contains) || linePoints.contains(Point(x,y))) None else Some(Point(x,y))
-      })
-    })
-
-    val grid: Grid[Char] = Box(Point(minx - 1, 0), Point(maxx + 1, maxy + 1)).iterator.map(p => {
-      val wall = if (sum.contains(p)) '#' else '.'
-      (p, wall)
-    }).toMap
-
-    val canvas = grid.canvas('.')(v => v)
-    canvas.foreach(a => {
-      a.slice(minx, maxx).foreach(print)
-      print("\n")
-    })
-
-    sum.size
-
-  }
   def part2(input: Seq[String]): Int = {
     val lines = input.flatMap(s => s.split(" -> ").sliding(2).map(e => Line(parsePoint(e(0)), parsePoint(e(1))))).toSet
 
-    //println(lines)
-
-    val linePoints = lines.flatMap(_.points())
-    val miny = linePoints.minBy(_.y).y
-    val maxy = linePoints.maxBy(_.y).y + 2
-    val minx = linePoints.minBy(_.x).x - maxy - 10
-    val maxx = linePoints.maxBy(_.x).x + maxy + 10
+    val walls = lines.flatMap(_.points())
+    val maxy = walls.maxBy(_.y).y + 2
+    val minx = walls.minBy(_.x).x - maxy
+    val maxx = walls.maxBy(_.x).x + maxy
 
     val infLine = Line(Point(minx, maxy), Point(maxx, maxy)).points()
-    val blockedPoints = mutable.ListBuffer[Point]()
+    val linePoints = walls ++ infLine
+    val blockedPoints = mutable.Set[Point]()
     blockedPoints.addAll(linePoints)
     blockedPoints.addAll(infLine)
 
@@ -149,21 +103,23 @@ class Day14 extends Inputs {
         }
       }
 
-      found = sand.p.y > maxy || blockedPoints.contains(Point(500,0))
-
+      found = sand.p.y > maxy || blockedPoints.contains(Point(500, 0))
     }
+
+    printSand(maxy, minx, maxx, linePoints, blockedPoints.toSet)
+    iteration
+  }
+
+  private def printSand(maxy: Int, minx: Int, maxx: Int, linePoints: Set[Point], blockedPoints: Set[Point]) = {
     val grid: Grid[Char] = Box(Point(minx - 1, 0), Point(maxx + 1, maxy + 1)).iterator.map(p => {
-      val wall = if (blockedPoints.contains(p)) '#' else '.'
+      val wall = if (linePoints.contains(p)) '\u2588' else if (blockedPoints.contains(p)) 'o' else ' '
       (p, wall)
     }).toMap
 
-    val canvas = grid.canvas('.')(v => v)
+    val canvas = grid.canvas(' ')(v => v)
     canvas.foreach(a => {
       a.slice(minx, maxx).foreach(print)
       print("\n")
     })
-
-
-    iteration
   }
 }
