@@ -91,4 +91,14 @@ object Points {
       } yield Point(x, y)
     }
   }
+
+  case class Diamond(center: Point, manhattan: Int) {
+    def iterator: Iterator[Point] = {
+      val box = for {
+        x <- (center.x-manhattan to center.x + manhattan).iterator
+        y <- (center.y -manhattan to center.y + manhattan).iterator
+      } yield Point(x, y)
+      box.filter(p => p.manhattan( center) <= manhattan)
+    }
+  }
 }
