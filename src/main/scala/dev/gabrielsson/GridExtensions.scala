@@ -10,10 +10,18 @@ object GridExtensions {
 
   implicit class GridCanvas[A: ClassTag](val grid: Grid[A]) {
     def canvas(default: A)(cf: A => A): Array[Array[A]] = {
-      val (x, y) = (grid.keys.maxBy(_.x).x, grid.keys.maxBy(_.y).y)
+      val (x, y) = (grid.keys.maxBy(_.x.abs).x.abs, grid.keys.maxBy(_.y.abs).y.abs)
       val canvas = Array.tabulate(y + 1, x + 1)((_, _) => default)
       for {p <- grid}
-        yield canvas(p._1.y)(p._1.x) = cf(p._2)
+        yield canvas(p._1.y.abs)(p._1.x.abs) = cf(p._2)
+      canvas
+    }
+
+    def canvasNeg(default: A)(cf: A => A): Array[Array[A]] = {
+      val (x, y) = (grid.keys.maxBy(_.x.abs).x.abs, grid.keys.maxBy(_.y.abs).y.abs)
+      val canvas = Array.tabulate(y + 1, x + 1)((_, _) => default)
+      for {p <- grid}
+        yield canvas(p._1.y.abs)(p._1.x.abs) = cf(p._2)
       canvas
     }
 

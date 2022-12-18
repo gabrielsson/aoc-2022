@@ -7,6 +7,8 @@ import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.junit.JUnitRunner
 
+import scala.collection.mutable
+
 @RunWith(classOf[JUnitRunner])
 class GraphsTests extends AnyFlatSpec with Matchers {
 
@@ -96,6 +98,21 @@ class GraphsTests extends AnyFlatSpec with Matchers {
 
     grid.canvas(' ')(v => v).foreach(a => {
       a.foreach(print)
+      print("\n")
+    })
+  }
+
+  it should "print negative canvas" in {
+    val grid =
+      mutable.Map[Point, Char]()
+
+    grid(Point(-1,-1)) = 'A'
+    grid(Point(-1,-2)) = 'B'
+    grid(Point(-1,-3)) = 'C'
+    (0 to 7).map(x => Point(x, -3)).foreach(grid(_) = '-')
+
+    grid.toMap.canvas('.')(v => v).reverse.foreach(a => {
+      a.reverse.foreach(print)
       print("\n")
     })
   }
